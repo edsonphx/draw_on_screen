@@ -12,11 +12,11 @@ typedef struct
 
 point point_constructor(int16_t x, int16_t y)
 {
-	point result;
-	result.x = x;
-	result.y = y;
+  point result;
+  result.x = x;
+  result.y = y;
 	
-	return result;
+  return result;
 }
 //
 
@@ -30,19 +30,19 @@ typedef struct
 
 square_draw_instruction square_draw_instruction_constructor(point top_left, point buttom_right, int8_t color)
 {
-  	square_draw_instruction result;
+  square_draw_instruction result;
 	
-	result.top_left = top_left;
-	result.buttom_right = buttom_right;
-	result.color = color;
-	
-	return result;
+  result.top_left = top_left;
+  result.buttom_right = buttom_right;
+  result.color = color;
+  
+  return result;
 }
 //
 
 void put_pixel(int16_t x, int16_t y, int8_t color)
 {
-	*((int8_t*)VIDEO_ADDRESS + x + 320*y) = color;
+  *((int8_t*)VIDEO_ADDRESS + x + 320*y) = color;
 };
 
 void draw_square(square_draw_instruction sqr_instruction)
@@ -78,9 +78,9 @@ void draw_square(square_draw_instruction sqr_instruction)
   for (int x = min_x; x < max_x; x ++)
   {
      for (int y = min_y; y < max_y; y++)
-	 {
-	   put_pixel(x, y, sqr_instruction.color);	 
-	 }
+     {
+       put_pixel(x, y, sqr_instruction.color);	 
+     }
   }
 };
 

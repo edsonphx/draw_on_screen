@@ -84,6 +84,7 @@ void draw_square(square_draw_instruction sqr_instruction)
   }
 };
 
+// It will be changed to int16_t**
 void draw_on_screen_by_matrix(int16_t screen[][10],int8_t columns, int8_t lines, int8_t proportion)
 {
   for(int x = 0; x < columns; x++)

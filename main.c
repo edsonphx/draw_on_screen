@@ -15,7 +15,7 @@ point point_constructor(int16_t x, int16_t y)
   point result;
   result.x = x;
   result.y = y;
-	
+  
   return result;
 }
 //
@@ -31,7 +31,7 @@ typedef struct
 square_draw_instruction square_draw_instruction_constructor(point top_left, point buttom_right, int8_t color)
 {
   square_draw_instruction result;
-	
+  
   result.top_left = top_left;
   result.buttom_right = buttom_right;
   result.color = color;
@@ -55,50 +55,49 @@ void draw_square(square_draw_instruction sqr_instruction)
   
   if (sqr_instruction.top_left.x > sqr_instruction.buttom_right.x)
   {
-	min_x = sqr_instruction.buttom_right.x;
-	max_x = sqr_instruction.top_left.x;
+    min_x = sqr_instruction.buttom_right.x;
+    max_x = sqr_instruction.top_left.x;
   }
   else
   {
-	min_x = sqr_instruction.top_left.x;
-	max_x = sqr_instruction.buttom_right.x;  
+    min_x = sqr_instruction.top_left.x;
+    max_x = sqr_instruction.buttom_right.x;  
   }
   
   if (sqr_instruction.top_left.y > sqr_instruction.buttom_right.y)
   {
-	min_y = sqr_instruction.buttom_right.x;
-	max_y = sqr_instruction.top_left.x;
+    min_y = sqr_instruction.buttom_right.x;
+    max_y = sqr_instruction.top_left.x;
   }
   else
   {
-	min_y = sqr_instruction.top_left.y;
-	max_y = sqr_instruction.buttom_right.y;  
+    min_y = sqr_instruction.top_left.y;
+    max_y = sqr_instruction.buttom_right.y;  
   }
   
   for (int x = min_x; x < max_x; x ++)
   {
-     for (int y = min_y; y < max_y; y++)
-     {
-       put_pixel(x, y, sqr_instruction.color);	 
-     }
+    for (int y = min_y; y < max_y; y++)
+    {
+      put_pixel(x, y, sqr_instruction.color);	 
+    }
   }
 };
 
-// It will be changed to int16_t**
-void draw_on_screen_by_matrix(int16_t screen[][10],int8_t columns, int8_t lines, int8_t proportion)
+void draw_on_screen_by_matrix(int16_t* screen,int8_t num_columns, int8_t num_lines, int8_t ratio)
 {
-  for(int x = 0; x < columns; x++)
+  for(int x = 0; x < num_columns; x++)
   {
-	for (int y = 0; y < lines; y++)
+	for (int y = 0; y < num_lines; y++)
 	{
-	  point top_left = point_constructor(x * proportion, y * proportion);
+	  point top_left = point_constructor(x * ratio, y * ratio);
 	  
-	  point button_right = point_constructor((x * proportion) + proportion, (y * proportion) + proportion);
+	  point button_right = point_constructor((x * ratio) + ratio, (y * ratio) + ratio);
 	  
 	  square_draw_instruction sqt_instruction = square_draw_instruction_constructor(
 		top_left,
 		button_right,
-		screen[x][y]);
+		screen[y + (x * num_lines)]);
 	  
 	  draw_square(sqt_instruction);
 	};
@@ -119,7 +118,8 @@ int kmain(void)
   screen[2][0] = 0x01;
   screen[2][1] = 0x01;
   screen[2][2] = 0x01;
-    
-  draw_on_screen_by_matrix(screen, 16, 10, 15);
+  
+  draw_on_screen_by_matrix((int16_t*)screen, 16, 10, 15);
+  
   return 0;
 };
